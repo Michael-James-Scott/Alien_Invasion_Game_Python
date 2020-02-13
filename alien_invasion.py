@@ -21,8 +21,12 @@ class AlienInvasion:
     def run_game(self):
         """Start the main loop for the game."""
         while True:
+            
+            # Watch for keyboard and mouse events.
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    sys.exit()
             self._check_events()
-        
             # Redraw the screen during each pass through the loop.
             self.screen.fill(self.settings.bg_color)
 
@@ -30,13 +34,17 @@ class AlienInvasion:
 
             # Make the most recently drawn screen visible.
             pg.display.flip()
-
     def _check_events(self):
-        # Respond to keyboard and mouse events.
+        """Respond to keypresses and mouse events."""
         for event in pg.event.get():
             if event.type == pg.QUIT:
-                sys.exit() 
-
+                sys.exit()
+    def _update_screen(self):
+        """Update images on the screen, and flip to the new screen."""
+        self.screen.fill(self.settings.bg_color)
+        self.ship.blitme()
+        pygame.display.flip()
+            
 if __name__ == '__main__':
     # Make a game instance, and run the game.
     ai = AlienInvasion()
